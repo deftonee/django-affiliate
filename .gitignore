@@ -24,3 +24,4 @@ example/debug/emails/*
 !example/debug/emails/.gitkeep
 .cache/
 htmlcov/
+/.idea/
