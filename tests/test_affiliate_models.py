@@ -10,7 +10,7 @@ Affiliate = get_affiliate_model()
 class TestAffiliateModel(TestCase):
     def test_build_partner_absolute_link(self):
         resp = self.client.get('/')
-        request = resp.context['request']
+        request = resp.context[0].request
         affiliate = mommy.make(Affiliate)
         url = affiliate.build_absolute_affiliate_uri(request, '/')
         self.assertEqual('http://testserver/?aid={0}'.format(affiliate.aid), url)

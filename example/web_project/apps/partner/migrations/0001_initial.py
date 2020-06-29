@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('reward_percentage', models.BooleanField(default=True, verbose_name='in percent')),
                 ('is_active', models.BooleanField(default=True, verbose_name='active')),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='created at')),
-                ('user', models.OneToOneField(verbose_name='User', to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(verbose_name='User', to=settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)),
             ],
             options={
                 'abstract': False,
@@ -39,9 +39,9 @@ class Migration(migrations.Migration):
                 ('reward_percentage', models.BooleanField(default=False)),
                 ('reward', models.DecimalField(max_digits=5, decimal_places=2)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('affiliate', models.ForeignKey(to='partner.Affiliate')),
-                ('bought_by', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
-                ('product', models.ForeignKey(to='products.Product')),
+                ('affiliate', models.ForeignKey(to='partner.Affiliate', on_delete=models.DO_NOTHING)),
+                ('bought_by', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)),
+                ('product', models.ForeignKey(to='products.Product', on_delete=models.DO_NOTHING)),
             ],
             options={
             },

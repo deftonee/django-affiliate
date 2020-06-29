@@ -3,7 +3,9 @@ from datetime import timedelta
 
 from django.test import TestCase
 from django.utils import timezone
-from django.core.urlresolvers import reverse
+
+from django.urls import reverse
+
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 from django.test.utils import override_settings
@@ -19,23 +21,25 @@ class TestAffiliateMiddleware(TestCase):
     def test_no_affiliate_in_url(self):
         resp = self.client.get('/')
         self.assertEqual(resp.status_code, 200)
-        self.assertFalse(resp.context['request'].affiliate.exists())
+        self.assertFalse(resp.context[0].request.affiliate.exists())
 
     def test_bad_affiliate_code(self):
         resp = self.client.get(get_aid_url('/', 123))
         self.assertEqual(resp.status_code, 200)
-        self.assertFalse(resp.context['request'].affiliate.exists())
+        self.assertFalse(resp.context[0].request.affiliate.exists())
 
     def test_bad_affiliate_code_type(self):
         resp = self.client.get(get_aid_url('/', 'nailgun'))
         self.assertEqual(resp.status_code, 200)
-        self.assertFalse(resp.context['request'].affiliate.exists())
+        self.assertFalse(resp.context[0].request.affiliate.exists())
 
     def test_affiliate_assigned(self):
         affiliate = mommy.make(settings.AFFILIATE_AFFILIATE_MODEL)
         resp = self.client.get(get_aid_url('/', affiliate.aid))
         self.assertEqual(resp.status_code, 200)
-        affiliate_resp = resp.context['request'].affiliate
+        # tmp = resp.context[0].request
+        # tmp_1 = resp.context.request
+        affiliate_resp = resp.context[0].request.affiliate
         self.assertTrue(affiliate_resp.exists())
         self.assertEqual(affiliate.aid, affiliate_resp.aid)
 
@@ -45,7 +49,7 @@ class TestAffiliateMiddleware(TestCase):
         self.assertEqual(resp.status_code, 200)
         resp = self.client.get(get_aid_url('/', affiliate.aid + 100))  # invalid aid code
         self.assertEqual(resp.status_code, 200)
-        affiliate_resp = resp.context['request'].affiliate
+        affiliate_resp = resp.context[0].request.affiliate
         self.assertTrue(affiliate_resp.exists())
         self.assertEqual(affiliate.aid, affiliate_resp.aid)
 
@@ -58,7 +62,7 @@ class TestAffiliateMiddleware(TestCase):
             resp = self.client.get('/')
 
         self.assertEqual(resp.status_code, 200)
-        affiliate_resp = resp.context['request'].affiliate
+        affiliate_resp = resp.context[0].request.affiliate
         self.assertTrue(affiliate_resp.exists())
         self.assertEqual(affiliate.aid, affiliate_resp.aid)
 
@@ -71,7 +75,7 @@ class TestAffiliateMiddleware(TestCase):
             resp = self.client.get('/')
 
         self.assertEqual(resp.status_code, 200)
-        self.assertFalse(resp.context['request'].affiliate.exists())
+        self.assertFalse(resp.context[0].request.affiliate.exists())
 
     def test_previous_affiliate_session_expired(self):
         affiliate = mommy.make(settings.AFFILIATE_AFFILIATE_MODEL)
@@ -83,7 +87,7 @@ class TestAffiliateMiddleware(TestCase):
             resp = self.client.get(get_aid_url('/', affiliate.aid + 100))  # invalid aid code
 
         self.assertEqual(resp.status_code, 200)
-        self.assertFalse(resp.context['request'].affiliate.exists())
+        self.assertFalse(resp.context[0].request.affiliate.exists())
 
     def test_affiliate_code_in_post_request(self):
         affiliate = mommy.make(settings.AFFILIATE_AFFILIATE_MODEL)
@@ -91,8 +95,8 @@ class TestAffiliateMiddleware(TestCase):
             dict(username='newuser', password1='123456', password2='123456'))
         self.assertEqual(resp.status_code, 302)
         resp = self.client.get('/')
-        self.assertTrue(resp.context['request'].affiliate.exists())
-        self.assertEqual(resp.context['request'].affiliate.pk, affiliate.pk)
+        self.assertTrue(resp.context[0].request.affiliate.exists())
+        self.assertEqual(resp.context[0].request.affiliate.pk, affiliate.pk)
 
 
 @override_settings(AFFILIATE_REMOVE_PARAM_AND_REDIRECT=True)
@@ -106,19 +110,19 @@ class TestAffiliateMiddlewareRemoveAndRedirect(TestCase):
         resp = self.client.get(get_aid_url('/', affiliate.aid))
         self.assertRedirects(resp, '/')
         resp = self.client.get('/')
-        self.assertTrue(resp.context['request'].affiliate.exists())
-        self.assertEqual(resp.context['request'].affiliate.pk, affiliate.pk)
+        self.assertTrue(resp.context[0].request.affiliate.exists())
+        self.assertEqual(resp.context[0].request.affiliate.pk, affiliate.pk)
 
     def test_affiliate_code_remove_from_url_other_params_kept(self):
         affiliate = mommy.make(settings.AFFILIATE_AFFILIATE_MODEL)
         resp = self.client.get(get_aid_url('/', affiliate.aid) + '&other=param')
         self.assertRedirects(resp, '/?other=param')
         resp = self.client.get('/')
-        self.assertTrue(resp.context['request'].affiliate.exists())
-        self.assertEqual(resp.context['request'].affiliate.pk, affiliate.pk)
+        self.assertTrue(resp.context[0].request.affiliate.exists())
+        self.assertEqual(resp.context[0].request.affiliate.pk, affiliate.pk)
 
 
-@modify_settings(MIDDLEWARE_CLASSES={
+@modify_settings(MIDDLEWARE={
     'remove': [
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -140,14 +144,14 @@ class TestAffiliateMiddlewareNoSession(TestCase):
         affiliate = mommy.make(settings.AFFILIATE_AFFILIATE_MODEL)
         resp = self.client.get(get_aid_url('/', affiliate.aid))
         self.assertEqual(resp.status_code, 200)
-        affiliate_resp = resp.context['request'].affiliate
+        affiliate_resp = resp.context[0].request.affiliate
         self.assertTrue(affiliate_resp.exists())
         self.assertEqual(affiliate.aid, affiliate_resp.aid)
 
         # next request can't remember previous affiliate
         resp = self.client.get('/')
         self.assertEqual(resp.status_code, 200)
-        self.assertFalse(resp.context['request'].affiliate.exists())
+        self.assertFalse(resp.context[0].request.affiliate.exists())
 
     def test_no_session_exception_raised(self):
         app_settings.SAVE_IN_SESSION = True
