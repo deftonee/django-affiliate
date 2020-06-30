@@ -47,7 +47,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'crispy_forms',
     'affiliate',
-    # 'apps',
     'apps.users',
     'apps.partner',
     'apps.products',

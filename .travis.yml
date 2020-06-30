@@ -2,10 +2,13 @@ language: python
 
 python:
   - "2.7"
+  - "3.7"
 
 env:
   - TOXENV=py27-django110
   - TOXENV=py27-django111
+  - TOXENV=py37-django110
+  - TOXENV=py37-django111
 
 branches:
     only:

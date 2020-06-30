@@ -37,8 +37,6 @@ class TestAffiliateMiddleware(TestCase):
         affiliate = mommy.make(settings.AFFILIATE_AFFILIATE_MODEL)
         resp = self.client.get(get_aid_url('/', affiliate.aid))
         self.assertEqual(resp.status_code, 200)
-        # tmp = resp.context[0].request
-        # tmp_1 = resp.context.request
         affiliate_resp = resp.context[0].request.affiliate
         self.assertTrue(affiliate_resp.exists())
         self.assertEqual(affiliate.aid, affiliate_resp.aid)
