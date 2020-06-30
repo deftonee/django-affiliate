@@ -7,11 +7,6 @@ from django.conf.urls.static import static
 
 from django.contrib import admin
 
-# from apps.users.urls import urlpatterns as users_urlpatterns
-# from apps.partner.urls import urlpatterns as partner_urlpatterns
-# from apps.products.urls import urlpatterns as products_urlpatterns
-
-# from apps import users, partner, products
 admin.autodiscover()
 
 urlpatterns = [
