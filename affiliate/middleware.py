@@ -11,16 +11,17 @@ from django.utils.deprecation import MiddlewareMixin
 from .models import NoAffiliate
 from . import utils
 
-l = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 AffiliateModel = utils.get_affiliate_model()
+
 
 def _get_affiliate_instance(aid_code):
     try:
         return AffiliateModel.objects.filter(pk=aid_code).first()
     except (ValueError, TypeError) as e:
-        l.warning(u"Bad aid_code type: %s. Error message: %s.", aid_code, e)
+        log.warning(u"Bad aid_code type: %s. Error message: %s.", aid_code, e)
         return None
 
 
@@ -68,7 +69,7 @@ class AffiliateMiddleware(MiddlewareMixin):
                 return HttpResponseRedirect(url)
         if prev_aid and app_settings.SAVE_IN_SESSION:
             if prev_aid_dt is None:
-                l.error('_aid_dt not found in session')
+                log.error('_aid_dt not found in session')
                 if not new_aid:
                     session['_aid_dt'] = now.isoformat()
             else:

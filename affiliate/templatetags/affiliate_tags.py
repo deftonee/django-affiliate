@@ -26,7 +26,7 @@ def url_aff(parser, token):
         viewname = parser.compile_filter(bits[1])
     except TemplateSyntaxError as exc:
         exc.args = (exc.args[0] + ". "
-                "The syntax of 'url' changed in Django 1.5, see the docs."),
+                                  "The syntax of 'url' changed in Django 1.5, see the docs."),
         raise
     args = []
     kwargs = {}

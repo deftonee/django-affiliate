@@ -8,7 +8,7 @@ from django.conf import settings
 from . import app_settings
 from .utils import add_affiliate_code
 
-l = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 class AffiliateManager(models.Manager):
@@ -21,9 +21,9 @@ class AffiliateManager(models.Manager):
 class AbstractAffiliate(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_("user"), on_delete=models.CASCADE)
     reward_amount = models.DecimalField(_("reward amount"), max_digits=16,
-        decimal_places=5, default=app_settings.REWARD_AMOUNT)
+                                        decimal_places=5, default=app_settings.REWARD_AMOUNT)
     reward_percentage = models.BooleanField(_('in percent'),
-        default=app_settings.REWARD_PERCENTAGE)
+                                            default=app_settings.REWARD_PERCENTAGE)
     is_active = models.BooleanField(_('active'), default=True)
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
 
