@@ -110,7 +110,7 @@ Quick start
 
 To always keep the aid GET parameter (maybe you don't trust the cookies or you want to reward affiliate only if his visitor make payment at current link access, and not tomorrow)
 
-1. Load 'affiliate_urls' tags:
+1. Load 'affiliate_tags' tags:
 
         {% load affiliate_tags %}
 
