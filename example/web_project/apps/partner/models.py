@@ -9,10 +9,10 @@ class Affiliate(AbstractAffiliate):
 
 
 class AffiliateTransaction(models.Model):
-    affiliate = models.ForeignKey(Affiliate)
-    product = models.ForeignKey('products.Product')
+    affiliate = models.ForeignKey(Affiliate, on_delete=models.CASCADE)
+    product = models.ForeignKey('products.Product', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=5, decimal_places=2)
-    bought_by = models.ForeignKey(settings.AUTH_USER_MODEL)
+    bought_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     reward_amount = models.DecimalField(max_digits=5, decimal_places=2)
     reward_percentage = models.BooleanField(default=False)
     reward = models.DecimalField(max_digits=5, decimal_places=2)

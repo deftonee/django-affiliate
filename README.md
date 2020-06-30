@@ -43,8 +43,8 @@ Used by projects
 Requirements
 -----------
 
-- python (2.7, 3.4, 3.5)
-- django (1.6, 1.7, 1.8, 1.9)
+- python (2.7, 3.7)
+- django (1.10, 1.11)
 
 
 Quick start
@@ -63,10 +63,10 @@ Quick start
 
 3. Add 'affiliate.middleware.AffiliateMiddleware' to MIDDLEWARE_CLASSES:
 
-        MIDDLEWARE_CLASSES = (
+        MIDDLEWARE = [
             # ...
             'affiliate.middleware.AffiliateMiddleware',
-        )
+        ]
 
 4. Define your custom affiliate model (similar to custom user model):
 
@@ -82,13 +82,6 @@ Quick start
         AFFILIATE_AFFILIATE_MODEL = 'our_app.Affiliate'
 
 5. Create tables
-
-        # django <= 1.6
-        python manage.py syncdb
-
-        # django <= 1.6 & south
-        python manage.py schemamigration our_app --auto
-        python manage.py migrate our_app
 
         # django >= 1.7
         python manage.py makemigrations our_app
@@ -117,9 +110,9 @@ Quick start
 
 To always keep the aid GET parameter (maybe you don't trust the cookies or you want to reward affiliate only if his visitor make payment at current link access, and not tomorrow)
 
-1. Load 'affiliate_urls' tags:
+1. Load 'affiliate_tags' tags:
 
-        {% load affiliate_urls %}
+        {% load affiliate_tags %}
 
 2. Use 'url_aff' instead of 'url' template tag:
 

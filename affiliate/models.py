@@ -19,7 +19,7 @@ class AffiliateManager(models.Manager):
 
 
 class AbstractAffiliate(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_("user"))
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_("user"), on_delete=models.CASCADE)
     reward_amount = models.DecimalField(_("reward amount"), max_digits=16,
         decimal_places=5, default=app_settings.REWARD_AMOUNT)
     reward_percentage = models.BooleanField(_('in percent'),

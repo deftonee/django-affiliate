@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import logging
 from os.path import join
 from django import VERSION as DJANGO_VERSION
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -54,7 +55,7 @@ INSTALLED_APPS = (
 if DJANGO_VERSION < (1, 7):
     INSTALLED_APPS += ('south', )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -62,7 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'affiliate.middleware.AffiliateMiddleware',
-)
+]
 
 ROOT_URLCONF = 'config.urls'
 
@@ -87,22 +88,30 @@ CACHES = {
     }
 }
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.request',
-)
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-TEMPLATE_DIRS = (
-    join(BASE_DIR, 'templates'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'DIRS': [
+            join(BASE_DIR, 'templates'),
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
+            ]
+        }
+    },
+]
+
+
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 # https://docs.djangoproject.com/en/dev/howto/static-files/
@@ -223,7 +232,7 @@ LOGGING = {
             'formatter': 'main_formatter',
         },
         'null': {
-            "class": 'django.utils.log.NullHandler',
+            "class": 'logging.NullHandler',
         }
     },
     'loggers': {

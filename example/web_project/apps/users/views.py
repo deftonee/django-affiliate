@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.views.generic import CreateView
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
