@@ -10,8 +10,7 @@ class Product(models.Model):
     title = models.CharField(_("Title"), max_length=50)
     description = models.TextField(_("Description"))
     image = models.ImageField(_("Image"), upload_to="images/products/", blank=True, null=True)
-    price = models.DecimalField(_("Product price"), max_digits=5,
-        decimal_places=2)
+    price = models.DecimalField(_("Product price"), max_digits=5, decimal_places=2)
 
     class Meta:
         verbose_name = _('Product')

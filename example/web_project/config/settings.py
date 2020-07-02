@@ -1,3 +1,7 @@
+# flake8: noqa: F401
+# flake8: noqa: F403
+
+
 """
 Django settings for affiliate project.
 
@@ -10,7 +14,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import logging
 from os.path import join
 from django import VERSION as DJANGO_VERSION
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -110,7 +113,6 @@ TEMPLATES = [
         }
     },
 ]
-
 
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root

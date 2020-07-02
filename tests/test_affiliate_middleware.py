@@ -90,7 +90,7 @@ class TestAffiliateMiddleware(TestCase):
     def test_affiliate_code_in_post_request(self):
         affiliate = mommy.make(settings.AFFILIATE_AFFILIATE_MODEL)
         resp = self.client.post(get_aid_url(reverse('users:signup'), affiliate.aid),
-            dict(username='newuser', password1='123456', password2='123456'))
+                                dict(username='newuser', password1='123456', password2='123456'))
         self.assertEqual(resp.status_code, 302)
         resp = self.client.get('/')
         self.assertTrue(resp.context[0].request.affiliate.exists())

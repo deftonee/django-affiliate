@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.views import generic
 from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.views import redirect_to_login
 from affiliate.utils import get_affiliate_model
 from .models import Product
@@ -31,7 +30,7 @@ class ProductListView(generic.ListView):
         if pk:
             product = Product.objects.get(pk=pk)
             messages.add_message(request, messages.INFO,
-                _("Product %(product)s was bought" % {"product": product.title}))
+                                 ("Product %(product)s was bought" % {"product": product.title}))
             if request.affiliate.exists() and request.affiliate.is_active:
                 affiliate = request.affiliate
                 AffiliateTransaction.objects.create(

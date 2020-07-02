@@ -1,3 +1,4 @@
+# flake8: noqa: E302
 """
 WSGI config for woobie project.
 

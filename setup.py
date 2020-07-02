@@ -10,6 +10,7 @@ def __read(fname):
     except IOError:
         return ''
 
+
 if sys.argv[-1] == 'publish':
     os.system('pandoc --from=markdown --to=rst --output=README.rst README.md')
     os.system('pandoc --from=markdown --to=rst --output=HISTORY.rst HISTORY.md')
