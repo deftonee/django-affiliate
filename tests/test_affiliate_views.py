@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from django.conf import settings
-from model_mommy import mommy
+from model_bakery import baker
 
 from affiliate.utils import get_affiliate_model
 
@@ -13,7 +13,7 @@ Affiliate = get_affiliate_model()
 class TestAffiliateView(TestCase):
     def setUp(self):
         super(TestAffiliateView, self).setUp()
-        self.user = mommy.make(settings.AUTH_USER_MODEL, username='john')
+        self.user = baker.make(settings.AUTH_USER_MODEL, username='john')
         self.user.set_password('123456')
         self.user.save()
 

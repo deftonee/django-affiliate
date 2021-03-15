@@ -43,8 +43,8 @@ Used by projects
 Requirements
 -----------
 
-- python (2.7, 3.7)
-- django (1.10, 1.11)
+- python (3.7)
+- django (1.11, 2.0)
 
 
 Quick start
@@ -83,7 +83,6 @@ Quick start
 
 5. Create tables
 
-        # django >= 1.7
         python manage.py makemigrations our_app
         python manage.py migrate our_app
 
