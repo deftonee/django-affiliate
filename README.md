@@ -37,14 +37,14 @@ Used by projects
 ----------------
 - [builds.io](http://builds.io/)
 - [wirelayer.net](http://www.wirelayer.net/)
-- [smmplanner.com](htt 22,ps://smmplanner.com/)
+- [smmplanner.com](https://smmplanner.com/)
 
 
 Requirements
 -----------
 
-- python (3.7)
-- django (1.11, 2.0, 2.1)
+- python (3.7, 3.8, 3.9)
+- django (1.11, 2.0, 2.1, 2.2)
 
 
 Quick start
