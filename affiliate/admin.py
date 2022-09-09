@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
+from django.apps import apps
 from django.contrib import admin
-from .utils import get_model
 from . import app_settings
 
-Affiliate = get_model(app_settings.AFFILIATE_MODEL)
+Affiliate = apps.get_model(app_settings.AFFILIATE_MODEL)
 
 
 class AffiliateAdmin(admin.ModelAdmin):

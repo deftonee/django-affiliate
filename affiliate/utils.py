@@ -1,21 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.utils.http import urlencode
-from django.utils.six.moves.urllib.parse import parse_qsl, urlparse, urlunparse
+from django.apps import apps
+from urllib.parse import parse_qsl, urlparse, urlunparse
 from . import app_settings
-try:
-    from django.apps import apps
-    get_model = apps.get_model
-except ImportError:
-    from django.db.models.loading import get_model as django_get_model
-
-    def get_model(app_label, model_name=None):
-        if model_name is None:
-            app_label, model_name = app_label.split('.')
-        return django_get_model(app_label, model_name)
 
 
 def get_affiliate_model():
-    return get_model(app_settings.AFFILIATE_MODEL)
+    return apps.get_model(app_settings.AFFILIATE_MODEL)
 
 
 def add_affiliate_code(url, aid_code):

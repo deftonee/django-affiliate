@@ -2,8 +2,7 @@ from __future__ import print_function, division, absolute_import, unicode_litera
 import logging
 from decimal import Decimal as D
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.utils import six
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from . import app_settings
 from .utils import add_affiliate_code
@@ -35,7 +34,7 @@ class AbstractAffiliate(models.Model):
         verbose_name_plural = _("affiliates")
 
     def __str__(self):
-        return six.text_type(self.aid)
+        return str(self.aid)
 
     @property
     def aid(self):

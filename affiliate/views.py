@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.views import generic
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from .forms import AffiliateCreateForm

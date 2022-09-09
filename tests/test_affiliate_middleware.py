@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import timedelta
+from importlib import reload
 
 from django.test import TestCase
 from django.utils import timezone
@@ -9,7 +10,6 @@ from django.urls import reverse
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 from django.test.utils import override_settings
-from django.utils import six
 from model_bakery import baker
 from freezegun import freeze_time
 
@@ -101,7 +101,7 @@ class TestAffiliateMiddleware(TestCase):
 class TestAffiliateMiddlewareRemoveAndRedirect(TestCase):
     def setUp(self):
         super(TestAffiliateMiddlewareRemoveAndRedirect, self).setUp()
-        six.moves.reload_module(app_settings)
+        reload(app_settings)
 
     def test_affiliate_code_remove_from_url(self):
         affiliate = baker.make(settings.AFFILIATE_AFFILIATE_MODEL)
@@ -134,7 +134,7 @@ class TestAffiliateMiddlewareRemoveAndRedirect(TestCase):
 class TestAffiliateMiddlewareNoSession(TestCase):
     def setUp(self):
         super(TestAffiliateMiddlewareNoSession, self).setUp()
-        six.moves.reload_module(app_settings)
+        reload(app_settings)
 
     def test_no_session_affiliate_in_url(self):
         app_settings.SAVE_IN_SESSION = False

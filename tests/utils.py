@@ -9,7 +9,7 @@ def get_aid_url(url, aid_code):
 try:
     from django.test import modify_settings
 except ImportError:
-    from django.test.utils import override_settings, settings, six
+    from django.test.utils import override_settings, settings
 
     class modify_settings(override_settings):
         """
@@ -44,7 +44,7 @@ except ImportError:
                     value = list(getattr(settings, name, []))
                 for action, items in operations.items():
                     # items my be a single value or an iterable.
-                    if isinstance(items, six.string_types):
+                    if isinstance(items, str):
                         items = [items]
                     if action == 'append':
                         value = value + [item for item in items if item not in value]
