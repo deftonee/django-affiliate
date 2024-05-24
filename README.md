@@ -44,7 +44,7 @@ Requirements
 -----------
 
 - python (3.7, 3.8, 3.9)
-- django (1.11, 2.0, 2.1, 2.2)
+- django (3, 4)
 
 
 Quick start
